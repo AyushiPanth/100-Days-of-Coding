@@ -1,0 +1,19 @@
+class Solution:
+    def do_overlap(self, interval1, interval2):
+        first = max(interval1[0], interval2[0])
+        second = min(interval1[1], interval2[1])
+        return second - first >= 0    
+    def merge(self, intervals: List[List[int]]) -> List[List[int]]:
+        intervals.sort()
+        result = [intervals[0]]   
+        for interval in intervals[1:]: 
+            interval2 = result[-1]           
+            if self.do_overlap(interval, interval2):
+                first = min(interval[0], interval2[0])
+                second = max(interval[1], interval2[1])
+                result[-1] = [first, second]
+            else:
+                result.append(interval)
+        return result
+
+        
