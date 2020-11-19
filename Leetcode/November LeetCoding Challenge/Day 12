@@ -1,0 +1,18 @@
+
+class Solution:
+    def __init__(self):
+        self.result = []
+        
+    def permuteUnique(self, nums: List[int]) -> List[List[int]]:
+        self.backtracking(nums, [])
+        return self.result
+    
+    def backtracking(self, nums, path):
+        if not nums:
+            if path in self.result :
+                pass
+            else:
+                self.result.append(path)
+        for x in range(len(nums)):    
+            self.backtracking(nums[:x] + nums[x + 1:], path + [nums[x]])    
+                
