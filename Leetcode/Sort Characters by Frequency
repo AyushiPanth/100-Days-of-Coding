@@ -1,0 +1,28 @@
+class Solution {
+public:
+    map<char, int> mappingFrequency(string s) {
+        map<char, int> m;
+        for(auto i : s) {
+            m[i]++;
+        }
+        return m;
+    }
+public:
+    string frequencySort(string s) {
+        map<char, int> freq = mappingFrequency(s);
+        priority_queue<pair<int, char>> maxHeap;
+        for(auto i : freq) {
+            maxHeap.push(make_pair(i.second, i.first));
+        }
+        string answer = "";
+        while(!empty(maxHeap)) {
+            int fre = maxHeap.top().first;
+            char ele = maxHeap.top().second;
+            for(int i = 0; i < fre; i++) {
+                answer += ele;
+            }
+            maxHeap.pop();
+        }
+        return answer;
+    }
+};
