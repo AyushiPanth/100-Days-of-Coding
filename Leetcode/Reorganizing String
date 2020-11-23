@@ -1,0 +1,44 @@
+class Solution {
+public:
+    priority_queue<pair<int, char>> frequency(string s) {
+        unordered_map<char, int> f;
+        for(auto i : s) {
+            f[i]++;
+        }
+        return heapify(f);
+    }
+public:
+    priority_queue<pair<int, char>> heapify(unordered_map<char, int> freq) {
+        priority_queue<pair<int, char>> maxHeap;
+        for(auto i : freq) {
+            maxHeap.push(make_pair(i.second, i.first));
+        }
+        return maxHeap;
+    }
+public:
+    string reorganizeString(string S) {
+        priority_queue<pair<int, char>> maxHeap = frequency(S);
+        string answer = "";
+        while(maxHeap.size() > 1) {
+            char current = maxHeap.top().second;
+            int current_freq = maxHeap.top().first - 1;
+            maxHeap.pop();
+            char next = maxHeap.top().second;
+            int next_freq = maxHeap.top().first - 1;
+            maxHeap.pop();
+            answer = answer + current + next;
+            if(current_freq > 0)
+                maxHeap.push(make_pair(current_freq, current));
+            if(next_freq > 0)
+                maxHeap.push(make_pair(next_freq, next));
+        }
+        if(!empty(maxHeap)) {
+            int freq = maxHeap.top().first;
+            if(freq > 1)
+                return "";
+            else 
+                return answer + maxHeap.top().second;
+        }
+        return answer;
+    }
+};
